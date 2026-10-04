@@ -1,0 +1,23 @@
+# Summary
+
+* [Introduction](README.md)
+* [硬件规格](docs/硬件规格.md)
+* [固件列表](docs/固件列表.md)
+* [刷机指引](docs/刷机指引.md)
+    * [ophub armbian](docs/刷机指引/ophub_armbian.md)
+    * [ophub 飞牛](docs/刷机指引/ophub_fnos.md)
+    * [ophub openwrt](docs/刷机指引/ophub_openwrt.md)
+    * [android12固件](docs/刷机指引/android12.md)
+    * [android13固件](docs/刷机指引/android13.md)
+    * [android14固件](docs/刷机指引/android14.md)
+* [适配记录](docs/适配记录.md)
+    * [uboot v2017](docs/适配记录/uboot2017.md)
+    * [uboot v2026](docs/适配记录/uboot2026.md)
+    * [recovery](docs/适配记录/recovery.md)
+    * [android12适配](docs/适配记录/android/android12.md)
+    * [android13适配](docs/适配记录/android/android13.md)
+    * [android14适配](docs/适配记录/android/android14.md)
+    * [edk2 uefi适配](docs/适配记录/edk2_uefi.md)
+* [外壳机箱](docs/外壳机箱.md)
+* [需求清单](docs/需求清单.md)
+
