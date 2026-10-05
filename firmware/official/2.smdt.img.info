@@ -1,0 +1,17 @@
+File: 2.smdt.img
+Size: 4.0M
+MD5:  b5cfa9d6c8febd618f91ac2843d50a1c
+
+=== file info ===
+data
+
+=== hexdump (first 10 lines) ===
+00000000  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+00400000
+
+=== binwalk ===
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+

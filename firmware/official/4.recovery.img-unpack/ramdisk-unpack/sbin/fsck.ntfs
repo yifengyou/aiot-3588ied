@@ -1,0 +1,2 @@
+#!/bin/sh
+ntfsfix $(echo $@ |xargs -n 1|grep "^[^-]")

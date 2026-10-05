@@ -1,0 +1,17 @@
+File: 5.backup.img
+Size: 32M
+MD5:  58f06dd588d8ffb3beb46ada6309436b
+
+=== file info ===
+data
+
+=== hexdump (first 10 lines) ===
+00000000  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
+*
+02000000
+
+=== binwalk ===
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+

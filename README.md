@@ -17,6 +17,7 @@
   * [android13固件](docs/刷机指引/android13.md)
   * [android14固件](docs/刷机指引/android14.md)
 * [适配记录](docs/适配记录.md)
+  * [原厂固件修改](docs/适配记录/原厂固件修改.md)
   * [uboot v2017](docs/适配记录/uboot2017.md)
   * [uboot v2026](docs/适配记录/uboot2026.md)
   * [recovery](docs/适配记录/recovery.md)

@@ -1,0 +1,6 @@
+NAME=Buildroot
+VERSION=-g792e0cb
+ID=buildroot
+VERSION_ID=2021.11
+PRETTY_NAME="Buildroot 2021.11"
+BUILD_INFO="ybj@server_32 Tue May  7 16:33:35 CST 2024 - /home/diskd2/ybj/RK3588_Linux/buildroot/configs/rockchip_rk3588_recovery_defconfig"
