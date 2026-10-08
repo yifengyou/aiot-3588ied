@@ -57,37 +57,30 @@ jobs:
       - name: Run Build in Ubuntu 22.04 container
         working-directory: /builder
         run: |
-          sudo mkdir -p /builder/emmc_release/
-          sudo mkdir -p /builder/spi_release/
+          sudo mkdir -p /builder/release/
           sudo /bin/cp -a ${{ github.workspace }}/* .
           ls -alh
           cd recovery_uboot2026
           ./kdev-build.sh
           ls -alh output
-          sudo cp output/emmc_full_disk* /builder/emmc_release/
-          sudo cp output/G98-Recovery_ONLY-EMMC* /builder/emmc_release/
-
-          sudo cp output/spi_full_disk* /builder/spi_release/
-          sudo cp output/G98-Recovery_ONLY-SPI*  /builder/spi_release/
+          sudo cp output/* /builder/release/
 
       - name: List build output
         run: |
-          ls -alh  /builder/emmc_release/*
-          md5sum /builder/emmc_release/*
-          ls -alh  /builder/spi_release/*
-          md5sum /builder/spi_release/*
+          ls -alh /builder/release/*
+          md5sum /builder/release/*
 
       - name: Upload EMMC Recovery to Release
         uses: ncipollo/release-action@main
         with:
           tag: recovery_uboot2026
-          artifacts: /builder/emmc_release/*
+          artifacts: /builder/release/*
           allowUpdates: true
           removeArtifacts: false
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-            # 视美泰 AIoT 3588IED 镜像
+            # 视美泰 AIoT-3588IED 镜像
 
             ## 免责声明
 
