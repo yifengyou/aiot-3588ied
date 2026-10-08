@@ -1,0 +1,12 @@
+[Unit]
+Description=SMDT Watchdog Timer
+
+[Service]
+Type=simple
+User=root
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/local/bin/smdt_wdt
+
+[Install]
+WantedBy=multi-user.target

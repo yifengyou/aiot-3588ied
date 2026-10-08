@@ -1,0 +1,4 @@
+output
+*.bin
+template/uboot.img
+template/*.bin
