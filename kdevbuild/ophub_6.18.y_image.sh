@@ -251,20 +251,17 @@ cat >/mnt/extlinux.conf <<EOF
 default l0
 menu title Kdev U-Boot menu
 prompt 1
-timeout 90
-
+timeout 30
 
 label normal
 	menu label Linux kernel ${KERNEL_VERSION}-kdev
 	linux vmlinuz-${KERNEL_RELEASE}
-	initrd initrd.img-${KERNEL_RELEASE}
 	fdt /dtb/${DTB_NAME}
 	append root=PARTUUID=${ROOT_PARTUUID} panic=9 rw console=ttyS2,1500000 console=tty1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory net.ifnames=0 biosdevname=0 level=10 loglevel=10 selinux=0 crashkernel=384M-:128M systemd.mask=systemd-growfs@-.service rockchip.dmc_freq=528000 video=HDMI-A-1:1920x1080@60
 
 label single
 	menu label Linux kernel ${KERNEL_VERSION}-kdev (rescue target)
 	linux vmlinuz-${KERNEL_RELEASE}
-	initrd initrd.img-${KERNEL_RELEASE}
 	fdt /dtb/${DTB_NAME}
 	append root=PARTUUID=${ROOT_PARTUUID} panic=9 rw console=ttyS2,1500000 console=tty1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory net.ifnames=0 biosdevname=0 level=10 loglevel=10 selinux=0 crashkernel=384M-:128M single
 
