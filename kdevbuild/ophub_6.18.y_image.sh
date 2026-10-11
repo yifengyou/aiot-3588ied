@@ -177,14 +177,14 @@ if [ -d kos/lib/modules ]; then
   sync
 fi
 
-# update rootfs with firmware
+# update rootfs with firmware in /firmware
 if [ -d ${WORKDIR}/firmware ]; then
   REQ=$(du -sk ${WORKDIR}/firmware | awk '{print $1}')
   AVAIL=$(df -k /mnt | tail -1 | awk '{print $4}')
   if [ "$AVAIL" -ge "$REQ" ]; then
-    mkdir -p /mnt/lib/firmware
-    cp -a ${WORKDIR}/firmware/* /mnt/lib/firmware/
-    ls -alh /mnt/lib/firmware/
+    mkdir -p /mnt/firmware
+    cp -a ${WORKDIR}/firmware/* /mnt/firmware/
+    ls -alh /mnt/firmware/
     sync
   else
     echo "Warning: Insufficient space on /mnt (Need: ${REQ}KB, Have: ${AVAIL}KB), skip add firmware"
