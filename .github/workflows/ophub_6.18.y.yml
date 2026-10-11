@@ -327,7 +327,7 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-            ## 固件下载与刷写指引
+            ## 固件刷写指引
 
               * [固件刷写指引](https://github.com/yifengyou/aiot-3588ied/blob/master/docs/%E5%88%B7%E6%9C%BA%E6%8C%87%E5%BC%95.md)
 
