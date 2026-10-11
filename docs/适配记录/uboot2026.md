@@ -403,6 +403,72 @@ Hit any key to stop autoboot: 0
 
 
 
+## uboot报错
+
+```shell
+
+
+U-Boot 2026.10-rc3-00110-g7ba490f0efe1-dirty (Oct 08 2026 - 13:38:58 +0800)
+
+Model: AIoT 3588IED Compiled By yifengyou v2026.10.08-13:38:53
+SoC:   RK3588J
+DRAM:  8 GiB
+PMIC:  RK806 (on=0x40, off=0x00)
+pca953x gpio-expander@20: Error reading output register
+Core:  848 devices, 38 uclasses, devicetree: separate
+SMDT WDT: probed watchdog@62
+SMDT WDT: failed to enable (ret=-121)
+WDT:   Failed to start watchdog@62
+MMC:   mmc@fe2c0000: 1, mmc@fe2d0000: 2, mmc@fe2e0000: 0
+Reading from MMC(0)... Loading Environment from MMC... OK
+In:    serial@feb50000
+Out:   serial@feb50000
+Err:   serial@feb50000
+Model: AIoT 3588IED Compiled By yifengyou v2026.10.08-13:38:53
+SoC:   RK3588J
+Net:   eth0: ethernet@fe1c0000
+No button labelled 'Recovery key'
+Hit any key to stop autoboot: 0
+=> <INTERRUPT>
+=> 
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
