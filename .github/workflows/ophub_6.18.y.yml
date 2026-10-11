@@ -327,39 +327,9 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-            ## 系统密码
+            ## 固件下载与刷写指引
 
-            - 用户名: root   密码: admin
-            - 用户名: admin  密码: admin
-
-            ## 镜像使用指引
-
-            解压后打开RKDevTool.exe，选择'下载镜像'，点击'执行'即可
-
-            ```
-            RKDevTool/
-            ├── bin
-            │         ├── adb.exe
-            │         ├── AdbWinApi.dll
-            │         ├── AdbWinUsbApi.dll
-            │         ├── AFPTool.exe
-            │         └── RKImageMaker.exe
-            ├── config.cfg
-            ├── config.ini
-            ├── Language
-            │         ├── Chinese.ini
-            │         └── English.ini
-            ├── RKDevTool.exe
-            └── rockdev
-                └── image
-                    ├── boot.img
-                    ├── MiniLoaderAll.bin
-                    ├── modules.tar.gz
-                    ├── package-file
-                    ├── parameter.txt
-                    ├── rootfs.img
-                    └── uboot.img
-            ```
+              * [固件刷写指引](https://github.com/yifengyou/aiot-3588ied/blob/master/docs/%E5%88%B7%E6%9C%BA%E6%8C%87%E5%BC%95.md)
 
             ## 免责声明
 

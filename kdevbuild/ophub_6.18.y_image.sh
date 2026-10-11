@@ -1,17 +1,28 @@
 #!/bin/bash
 
-set -euxo pipefail
+set -xe
 
 WORKDIR=$(pwd)
-export DEBIAN_FRONTEND=noninteractive
+BOARD_NAME="AIoT-3588IED"
+KERNEL_VERSION="6.18.y"
+KERNEL_RELEASE="6.18.55-kdev"
+DTB_NAME="rk3588-aiot-3588ied.dtb"
+BUILD_TAG="${BOARD_NAME}_${KERNEL_VERSION}_${set_rootfs}"
+SPL_LOADER="rk3588_spl_loader_v1.21.114.bin"
+UBOOT_URL="https://github.com/yifengyou/rockchip-uboot-mainline/releases/download/aiot-3588ied-uboot"
+KERNEL_URL="https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied"
+RECOVERY_URL="https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied-recovery"
+ROOTFS_BASE_URL="https://github.com/yifengyou/kdev/releases/download"
 
-LOG_FILE="${WORKDIR}/build.log"
-exec > >(tee -a "$LOG_FILE") 2>&1
-export BUILD_TAG="BDY_G98_6.18.y_${set_rootfs}"
+ROOT_PARTUUID="614e0000-0000-4b53-8000-1d28000054a9"
+
 
 #==========================================================================#
 #                        init build env                                    #
 #==========================================================================#
+export DEBIAN_FRONTEND=noninteractive
+export TZ=Asia/Shanghai
+
 apt-get update
 apt-get install -qq -y ca-certificates
 apt-get install -qq -y --no-install-recommends \
@@ -50,7 +61,7 @@ if [ -z "${set_vendor}" ] || [ -z "${set_rootfs}" ]; then
   echo "skip rootfs build"
 else
   echo "ROOTFS:${set_rootfs}"
-  ROOTFS_URL="https://github.com/yifengyou/kdev/releases/download/${set_vendor}-rootfs/${set_rootfs}"
+  ROOTFS_URL="${ROOTFS_BASE_URL}/${set_vendor}-rootfs/${set_rootfs}"
   echo "ROOTFS_URL:${ROOTFS_URL}"
 
   aria2c --check-certificate=false \
@@ -75,30 +86,30 @@ ls -alh ${WORKDIR}/rockdev/rootfs.img
 #==========================================================================#
 cd ${WORKDIR}
 
-mkdir -p ophub_6.18.y
-cd ophub_6.18.y
+mkdir -p ophub_${KERNEL_VERSION}
+cd ophub_${KERNEL_VERSION}
 
-wget -c https://github.com/yifengyou/rockchip-uboot-mainline/releases/download/aiot-3588ied-uboot/uboot.img
+wget -c ${UBOOT_URL}/uboot.img
 ls -alh uboot.img
 mv uboot.img ${WORKDIR}/rockdev/uboot.img
 ls -alh ${WORKDIR}/rockdev/uboot.img
 md5sum ${WORKDIR}/rockdev/uboot.img
 
-wget -c https://github.com/yifengyou/rockchip-uboot-mainline/releases/download/aiot-3588ied-uboot/rk3588_spl_loader_v1.21.114.bin
-ls -alh rk3588_spl_loader_v1.21.114.bin
-mv rk3588_spl_loader_v1.21.114.bin ${WORKDIR}/rockdev/rk3588_spl_loader_v1.21.114.bin
-ls -alh ${WORKDIR}/rockdev/rk3588_spl_loader_v1.21.114.bin
-md5sum ${WORKDIR}/rockdev/rk3588_spl_loader_v1.21.114.bin
+wget -c ${UBOOT_URL}/${SPL_LOADER}
+ls -alh ${SPL_LOADER}
+mv ${SPL_LOADER} ${WORKDIR}/rockdev/${SPL_LOADER}
+ls -alh ${WORKDIR}/rockdev/${SPL_LOADER}
+md5sum ${WORKDIR}/rockdev/${SPL_LOADER}
 
 #==========================================================================#
-#                        build recovery                                       #
+#                        build recovery                                    #
 #==========================================================================#
 cd ${WORKDIR}
 
-mkdir -p ophub_6.18.y
-cd ophub_6.18.y
+mkdir -p ophub_${KERNEL_VERSION}
+cd ophub_${KERNEL_VERSION}
 
-wget -c https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied-recovery/recovery.img
+wget -c ${RECOVERY_URL}/recovery.img
 ls -alh recovery.img
 mv recovery.img ${WORKDIR}/rockdev/recovery.img
 ls -alh ${WORKDIR}/rockdev/recovery.img
@@ -109,41 +120,41 @@ md5sum ${WORKDIR}/rockdev/recovery.img
 #==========================================================================#
 cd ${WORKDIR}
 
-mkdir -p ophub_6.18.y
-cd ophub_6.18.y
+mkdir -p ophub_${KERNEL_VERSION}
+cd ophub_${KERNEL_VERSION}
 
-wget -c https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied/Image-6.18.55-kdev
-ls -alh Image-6.18.55-kdev
-md5sum Image-6.18.55-kdev
+wget -c ${KERNEL_URL}/Image-${KERNEL_RELEASE}
+ls -alh Image-${KERNEL_RELEASE}
+md5sum Image-${KERNEL_RELEASE}
 
-wget -c https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied/config-6.18.55-kdev
-ls -alh config-6.18.55-kdev
-md5sum config-6.18.55-kdev
+wget -c ${KERNEL_URL}/config-${KERNEL_RELEASE}
+ls -alh config-${KERNEL_RELEASE}
+md5sum config-${KERNEL_RELEASE}
 
-wget -c https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied/System.map-6.18.55-kdev
-ls -alh System.map-6.18.55-kdev
-md5sum System.map-6.18.55-kdev
+wget -c ${KERNEL_URL}/System.map-${KERNEL_RELEASE}
+ls -alh System.map-${KERNEL_RELEASE}
+md5sum System.map-${KERNEL_RELEASE}
 
-wget -c https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied/rk3588-aiot-3588ied.dtb
-ls -alh rk3588-aiot-3588ied.dtb
-md5sum rk3588-aiot-3588ied.dtb
+wget -c ${KERNEL_URL}/${DTB_NAME}
+ls -alh ${DTB_NAME}
+md5sum ${DTB_NAME}
 
-wget -c https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied/kos-6.18.55-kdev.tar.gz
-ls -alh kos-6.18.55-kdev.tar.gz
-md5sum kos-6.18.55-kdev.tar.gz
-tar -xf kos-6.18.55-kdev.tar.gz
+wget -c ${KERNEL_URL}/kos-${KERNEL_RELEASE}.tar.gz
+ls -alh kos-${KERNEL_RELEASE}.tar.gz
+md5sum kos-${KERNEL_RELEASE}.tar.gz
+tar -xf kos-${KERNEL_RELEASE}.tar.gz
 du -sh kos
 
-wget -c https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied/kernel-devel-6.18.55-kdev.tar.gz
-ls -alh kernel-devel-6.18.55-kdev.tar.gz
-md5sum kernel-devel-6.18.55-kdev.tar.gz
-tar -xf kernel-devel-6.18.55-kdev.tar.gz
+wget -c ${KERNEL_URL}/kernel-devel-${KERNEL_RELEASE}.tar.gz
+ls -alh kernel-devel-${KERNEL_RELEASE}.tar.gz
+md5sum kernel-devel-${KERNEL_RELEASE}.tar.gz
+tar -xf kernel-devel-${KERNEL_RELEASE}.tar.gz
 du -sh kernel-devel
 
-wget -c https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied/kernel-headers-6.18.55-kdev.tar.gz
-ls -alh kernel-headers-6.18.55-kdev.tar.gz
-md5sum kernel-headers-6.18.55-kdev.tar.gz
-tar -xf kernel-headers-6.18.55-kdev.tar.gz
+wget -c ${KERNEL_URL}/kernel-headers-${KERNEL_RELEASE}.tar.gz
+ls -alh kernel-headers-${KERNEL_RELEASE}.tar.gz
+md5sum kernel-headers-${KERNEL_RELEASE}.tar.gz
+tar -xf kernel-headers-${KERNEL_RELEASE}.tar.gz
 du -sh kernel-headers
 
 # ============================================================
@@ -157,7 +168,7 @@ if [ -d kos/lib/modules ]; then
   if [ "$AVAIL" -ge "$REQ" ]; then
     rm -rf /mnt/lib/modules/*
     mkdir -p /mnt/lib/modules
-    # current in ${WORKDIR}/ophub_6.18.y
+    # current in ${WORKDIR}/ophub_${KERNEL_VERSION}
     cp -a kos/lib/modules/* /mnt/lib/modules
     sync
   else
@@ -188,7 +199,7 @@ if [ -d kernel-devel ]; then
   AVAIL=$(df -k /mnt | tail -1 | awk '{print $4}')
   if [ "$AVAIL" -ge "$REQ" ]; then
     mkdir -p /mnt/usr/src/kernels/
-    # current in ${WORKDIR}/ophub_6.18.y
+    # current in ${WORKDIR}/ophub_${KERNEL_VERSION}
     cp -a kernel-devel/* /mnt/usr/src/kernels/
     ls -alh /mnt/usr/src/kernels/
     sync
@@ -203,7 +214,7 @@ if [ -d kernel-headers ]; then
   AVAIL=$(df -k /mnt | tail -1 | awk '{print $4}')
   if [ "$AVAIL" -ge "$REQ" ]; then
     mkdir -p /mnt/usr/include/
-    # current in ${WORKDIR}/ophub_6.18.y
+    # current in ${WORKDIR}/ophub_${KERNEL_VERSION}
     cp -a kernel-headers/* /mnt/usr/include/
     ls -alh /mnt/usr/include/
     sync
@@ -223,11 +234,11 @@ mkfs.ext2 -U 7A3F0000-0000-446A-8000-702F00006273 -L kdevboot boot.img
 mount boot.img /mnt
 
 mkdir -p /mnt/dtb
-cp -a rk3588-aiot-3588ied.dtb /mnt/dtb/
-cp -f Image-6.18.55-kdev /mnt/vmlinuz-6.18.55-kdev
-cp -f config-6.18.55-kdev /mnt/config-6.18.55-kdev
-cp -f System.map-6.18.55-kdev /mnt/System.map-6.18.55-kdev
-touch /mnt/initrd.img-6.18.55-kdev
+cp -a ${DTB_NAME} /mnt/dtb/
+cp -f Image-${KERNEL_RELEASE} /mnt/vmlinuz-${KERNEL_RELEASE}
+cp -f config-${KERNEL_RELEASE} /mnt/config-${KERNEL_RELEASE}
+cp -f System.map-${KERNEL_RELEASE} /mnt/System.map-${KERNEL_RELEASE}
+touch /mnt/initrd.img-${KERNEL_RELEASE}
 
 cat >/mnt/extlinux.conf <<EOF
 ## /extlinux/extlinux.conf
@@ -244,18 +255,18 @@ timeout 90
 
 
 label normal
-	menu label Linux kernel 6.18.y-kdev
-	linux vmlinuz-6.18.55-kdev
-	initrd initrd.img-6.18.55-kdev
-	fdt /dtb/rk3588-aiot-3588ied.dtb
-	append root=PARTUUID=614e0000-0000-4b53-8000-1d28000054a9 rw console=ttyS2,1500000 console=tty1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory net.ifnames=0 biosdevname=0 level=10 loglevel=10 selinux=0 crashkernel=384M-:128M systemd.mask=systemd-growfs@-.service rockchip.dmc_freq=528000 video=HDMI-A-1:1920x1080@60
+	menu label Linux kernel ${KERNEL_VERSION}-kdev
+	linux vmlinuz-${KERNEL_RELEASE}
+	initrd initrd.img-${KERNEL_RELEASE}
+	fdt /dtb/${DTB_NAME}
+	append root=PARTUUID=${ROOT_PARTUUID} panic=9 rw console=ttyS2,1500000 console=tty1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory net.ifnames=0 biosdevname=0 level=10 loglevel=10 selinux=0 crashkernel=384M-:128M systemd.mask=systemd-growfs@-.service rockchip.dmc_freq=528000 video=HDMI-A-1:1920x1080@60
 
 label single
-	menu label Linux kernel 6.18.y-kdev (rescue target)
-	linux vmlinuz-6.18.55-kdev
-	initrd initrd.img-6.18.55-kdev
-	fdt /dtb/rk3588-aiot-3588ied.dtb
-	append root=PARTUUID=614e0000-0000-4b53-8000-1d28000054a9 rw console=ttyS2,1500000 console=tty1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory net.ifnames=0 biosdevname=0 level=10 loglevel=10 selinux=0 crashkernel=384M-:128M single
+	menu label Linux kernel ${KERNEL_VERSION}-kdev (rescue target)
+	linux vmlinuz-${KERNEL_RELEASE}
+	initrd initrd.img-${KERNEL_RELEASE}
+	fdt /dtb/${DTB_NAME}
+	append root=PARTUUID=${ROOT_PARTUUID} panic=9 rw console=ttyS2,1500000 console=tty1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory net.ifnames=0 biosdevname=0 level=10 loglevel=10 selinux=0 crashkernel=384M-:128M single
 
 EOF
 
@@ -291,11 +302,8 @@ cp -a ${WORKDIR}/RKDevTool-v3.37-AIoT-3588IED \
   ${WORKDIR}/rockdev_img_tmp/RKDevTool
 mkdir -p ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
 
-cp -a ${WORKDIR}/rockdev/uboot.img ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
-cp -a ${WORKDIR}/rockdev/rk3588_spl_loader_v1.21.114.bin ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
-cp -a ${WORKDIR}/rockdev/recovery.img ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
-cp -a ${WORKDIR}/rockdev/boot.img ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
-cp -a ${WORKDIR}/rockdev/rootfs.img ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
+cp -a ${WORKDIR}/rockdev/${SPL_LOADER} ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
+cp -a ${WORKDIR}/rockdev/*.img ${WORKDIR}/rockdev_img_tmp/RKDevTool/Image/
 
 cd ${WORKDIR}/rockdev_img_tmp/
 rar a ${WORKDIR}/release/${BUILD_TAG} RKDevTool
