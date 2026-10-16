@@ -14,6 +14,8 @@
     * [uboot v2017](docs/适配记录/uboot2017.md)
     * [uboot v2026](docs/适配记录/uboot2026.md)
     * [recovery](docs/适配记录/recovery.md)
+    * [ophub 6.18.y](docs/适配记录/ophub_6.18.y.md)
+    * [rockchip-linux develop-6.12](docs/适配记录/rockchip-linux_develop-6.12.md)
     * [android12适配](docs/适配记录/android/android12.md)
     * [android13适配](docs/适配记录/android/android13.md)
     * [android14适配](docs/适配记录/android/android14.md)
