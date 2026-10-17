@@ -19,10 +19,14 @@
   * [android13固件](docs/刷机指引/android13.md)
   * [android14固件](docs/刷机指引/android14.md)
 * [适配记录](docs/适配记录.md)
-  * [原厂固件修改](docs/适配记录/原厂固件修改.md)
   * [uboot v2017](docs/适配记录/uboot2017.md)
   * [uboot v2026](docs/适配记录/uboot2026.md)
   * [recovery](docs/适配记录/recovery.md)
+  * [ophub 6.18.y](docs/适配记录/ophub_6.18.y.md)
+  * [ophub 6.6.y](docs/适配记录/ophub_6.6.y.md)
+  * [ophub 6.1.y](docs/适配记录/ophub_6.1.y.md)
+  * [rockchip-linux develop-6.12](docs/适配记录/rockchip-linux_develop-6.12.md)
+  * [linux-stable](docs/适配记录/linux-stable.md)
   * [android12适配](docs/适配记录/android/android12.md)
   * [android13适配](docs/适配记录/android/android13.md)
   * [android14适配](docs/适配记录/android/android14.md)
@@ -55,24 +59,31 @@
 ![](./images/2922181593900.png)
 
 
-## 内核适配进度
+## 适配进度
 
 | 仓库地址 | 分支 | 适配进度 | 备注 |
 | :--- | :--- | :--- | :--- |
+| `https://github.com/u-boot/u-boot` | `main` | ✅ 已完成 | 初步完成 |
+
+
+| 仓库地址 | 分支 | 适配进度 | 备注 |
+| :--- | :--- | :--- | :--- |
+| `https://mirrors.cernet.edu.cn/linux-stable.git` | `master` | ✅ 已完成 | 初步完成, 7.3内核 |
 | `https://github.com/ophub/linux-6.18.y.git` | `ophub_6.18.y` | ✅ 已完成 | 初步完成 |
 | `https://github.com/rockchip-linux/kernel.git` | `develop-6.12` | ✅ 已完成 | 初步完成 |
+| `https://github.com/rockchip-linux/kernel.git` | `develop-6.6` | ✅ 已完成 | 初步完成 |
+| `https://github.com/rockchip-linux/kernel.git` | `develop-6.1` | ✅ 已完成 | 初步完成 |
+| `https://gitee.com/anolis/cloud-kernel` | `devel-6.6` | ✅ 已完成 | 初步完成 |
+| `https://atomgit.com/openeuler/kernel` | `OLK-6.6` | ✅ 已完成 | 初步完成 |
+| `https://gitee.com/OpenCloudOS/OpenCloudOS-Kernel` | `linux-6.6` | ✅ 已完成 | 初步完成 |
+
 
 | 仓库地址 | 分支 | 适配进度 | 备注 |
 | :--- | :--- | :--- | :--- |
-| `https://github.com/rockchip-linux/kernel.git` | `develop-6.6` | 🔄 进行中 | 适配中 |
-| `https://github.com/rockchip-linux/kernel.git` | `develop-6.1` | 🔄 进行中 | 适配中 |
 | `https://github.com/ophub/ophub_6.1.y` | `master` | 🔄 进行中 | 适配中 |
 | `https://github.com/ophub/ophub_6.6.y` | `master` | 🔄 进行中 | 适配中 |
 | `https://github.com/ophub/ophub_6.12.y` | `master` | 🔄 进行中 | 适配中 |
-| `https://atomgit.com/openeuler/kernel` | `OLK-6.6` | 🔄 进行中 | 适配中 |
-| `https://gitee.com/OpenCloudOS/OpenCloudOS-Kernel` | `linux-6.6` | ✅ 已完成 | 初步完成 |
-| `https://gitee.com/anolis/cloud-kernel` | `devel-6.6` | ✅ 已完成 | 初步完成 |
-| `https://mirrors.cernet.edu.cn/linux-stable.git` | `master` | 🔄 进行中 | 适配中 |
+
 
 ---
 
