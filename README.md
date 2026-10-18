@@ -76,13 +76,9 @@
 | `https://gitee.com/anolis/cloud-kernel` | `devel-6.6` | ✅ 已完成 | 初步完成 |
 | `https://atomgit.com/openeuler/kernel` | `OLK-6.6` | ✅ 已完成 | 初步完成 |
 | `https://gitee.com/OpenCloudOS/OpenCloudOS-Kernel` | `linux-6.6` | ✅ 已完成 | 初步完成 |
-
-
-| 仓库地址 | 分支 | 适配进度 | 备注 |
-| :--- | :--- | :--- | :--- |
-| `https://github.com/ophub/ophub_6.1.y` | `master` | 🔄 进行中 | 适配中 |
-| `https://github.com/ophub/ophub_6.6.y` | `master` | 🔄 进行中 | 适配中 |
-| `https://github.com/ophub/ophub_6.12.y` | `master` | 🔄 进行中 | 适配中 |
+| `https://github.com/ophub/ophub_6.1.y` | `master` | ✅ 已完成 | 初步完成 |
+| `https://github.com/ophub/ophub_6.6.y` | `master` | ✅ 已完成 | 初步完成 |
+| `https://github.com/ophub/ophub_6.12.y` | `master` | ✅ 已完成 | 初步完成 |
 
 
 ---
