@@ -328,7 +328,7 @@ jobs:
           body: |
             ## 固件刷写指引
 
-              * [固件刷写指引](https://github.com/yifengyou/aiot-3588ied/blob/master/docs/ophub_armbian.md)
+              * [固件刷写指引](https://github.com/yifengyou/aiot-3588ied/blob/master/docs/rom_update_guide.md)
 
             ## 免责声明
 
