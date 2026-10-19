@@ -4,10 +4,9 @@ set -xe
 
 WORKDIR=$(pwd)
 BOARD_NAME="AIoT-3588IED"
-KERNEL_VERSION="6.18.y"
 KERNEL_RELEASE="6.18.55-kdev"
 DTB_NAME="rk3588-aiot-3588ied.dtb"
-BUILD_TAG="${BOARD_NAME}_${KERNEL_VERSION}_${set_rootfs}"
+BUILD_TAG="${BOARD_NAME}_${KERNEL_RELEASE}_${set_rootfs}"
 SPL_LOADER="rk3588_spl_loader_v1.21.114.bin"
 UBOOT_URL="https://github.com/yifengyou/rockchip-uboot-mainline/releases/download/aiot-3588ied-uboot"
 KERNEL_URL="https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/download/aiot-3588ied"
@@ -86,8 +85,8 @@ ls -alh ${WORKDIR}/rockdev/rootfs.img
 #==========================================================================#
 cd ${WORKDIR}
 
-mkdir -p ophub_${KERNEL_VERSION}
-cd ophub_${KERNEL_VERSION}
+mkdir -p ophub_${KERNEL_RELEASE}
+cd ophub_${KERNEL_RELEASE}
 
 wget -c ${UBOOT_URL}/uboot.img
 ls -alh uboot.img
@@ -106,8 +105,8 @@ md5sum ${WORKDIR}/rockdev/${SPL_LOADER}
 #==========================================================================#
 cd ${WORKDIR}
 
-mkdir -p ophub_${KERNEL_VERSION}
-cd ophub_${KERNEL_VERSION}
+mkdir -p ophub_${KERNEL_RELEASE}
+cd ophub_${KERNEL_RELEASE}
 
 wget -c ${RECOVERY_URL}/recovery.img
 ls -alh recovery.img
@@ -120,8 +119,8 @@ md5sum ${WORKDIR}/rockdev/recovery.img
 #==========================================================================#
 cd ${WORKDIR}
 
-mkdir -p ophub_${KERNEL_VERSION}
-cd ophub_${KERNEL_VERSION}
+mkdir -p ophub_${KERNEL_RELEASE}
+cd ophub_${KERNEL_RELEASE}
 
 wget -c ${KERNEL_URL}/Image-${KERNEL_RELEASE}
 ls -alh Image-${KERNEL_RELEASE}
@@ -168,7 +167,7 @@ if [ -d kos/lib/modules ]; then
   if [ "$AVAIL" -ge "$REQ" ]; then
     rm -rf /mnt/lib/modules/*
     mkdir -p /mnt/lib/modules
-    # current in ${WORKDIR}/ophub_${KERNEL_VERSION}
+    # current in ${WORKDIR}/ophub_${KERNEL_RELEASE}
     cp -a kos/lib/modules/* /mnt/lib/modules
     sync
   else
@@ -199,7 +198,7 @@ if [ -d kernel-devel ]; then
   AVAIL=$(df -k /mnt | tail -1 | awk '{print $4}')
   if [ "$AVAIL" -ge "$REQ" ]; then
     mkdir -p /mnt/usr/src/kernels/
-    # current in ${WORKDIR}/ophub_${KERNEL_VERSION}
+    # current in ${WORKDIR}/ophub_${KERNEL_RELEASE}
     cp -a kernel-devel/* /mnt/usr/src/kernels/
     ls -alh /mnt/usr/src/kernels/
     sync
@@ -214,7 +213,7 @@ if [ -d kernel-headers ]; then
   AVAIL=$(df -k /mnt | tail -1 | awk '{print $4}')
   if [ "$AVAIL" -ge "$REQ" ]; then
     mkdir -p /mnt/usr/include/
-    # current in ${WORKDIR}/ophub_${KERNEL_VERSION}
+    # current in ${WORKDIR}/ophub_${KERNEL_RELEASE}
     cp -a kernel-headers/* /mnt/usr/include/
     ls -alh /mnt/usr/include/
     sync
@@ -254,13 +253,13 @@ prompt 1
 timeout 30
 
 label normal
-	menu label Linux kernel ${KERNEL_VERSION}-kdev
+	menu label Linux kernel ${KERNEL_RELEASE}-kdev
 	linux vmlinuz-${KERNEL_RELEASE}
 	fdt /dtb/${DTB_NAME}
 	append root=PARTUUID=${ROOT_PARTUUID} panic=9 rw console=ttyS2,1500000 console=tty1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory net.ifnames=0 biosdevname=0 level=10 loglevel=10 selinux=0 crashkernel=384M-:128M systemd.mask=systemd-growfs@-.service rockchip.dmc_freq=528000 video=HDMI-A-1:1920x1080@60
 
 label single
-	menu label Linux kernel ${KERNEL_VERSION}-kdev (rescue target)
+	menu label Linux kernel ${KERNEL_RELEASE}-kdev (rescue target)
 	linux vmlinuz-${KERNEL_RELEASE}
 	fdt /dtb/${DTB_NAME}
 	append root=PARTUUID=${ROOT_PARTUUID} panic=9 rw console=ttyS2,1500000 console=tty1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory net.ifnames=0 biosdevname=0 level=10 loglevel=10 selinux=0 crashkernel=384M-:128M single

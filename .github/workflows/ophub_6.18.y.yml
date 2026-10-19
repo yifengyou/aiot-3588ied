@@ -320,7 +320,7 @@ jobs:
       - name: Upload Image to Release
         uses: ncipollo/release-action@main
         with:
-          tag: ophub_6.18.y_image
+          tag: ophub_6.18.y
           artifacts: /builder/release/*
           allowUpdates: true
           removeArtifacts: false
@@ -329,7 +329,7 @@ jobs:
           body: |
             ## 固件刷写指引
 
-              * [固件刷写指引](https://github.com/yifengyou/aiot-3588ied/blob/master/docs/%E5%88%B7%E6%9C%BA%E6%8C%87%E5%BC%95.md)
+              * [固件刷写指引](https://github.com/yifengyou/aiot-3588ied/blob/master/docs/ophub_armbian.md)
 
             ## 免责声明
 
