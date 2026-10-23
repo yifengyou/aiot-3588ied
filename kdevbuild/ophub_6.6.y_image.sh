@@ -191,6 +191,20 @@ if [ -d ${WORKDIR}/firmware ]; then
   sync
 fi
 
+if [ -d ${WORKDIR}/vendor ]; then
+  REQ=$(du -sk ${WORKDIR}/vendor | awk '{print $1}')
+  AVAIL=$(df -k /mnt | tail -1 | awk '{print $4}')
+  if [ "$AVAIL" -ge "$REQ" ]; then
+    mkdir -p /mnt/vendor
+    cp -a ${WORKDIR}/vendor/* /mnt/vendor/
+    ls -alh /mnt/vendor/
+    sync
+  else
+    echo "Warning: Insufficient space on /mnt (Need: ${REQ}KB, Have: ${AVAIL}KB), skip add vendor"
+  fi
+  sync
+fi
+
 # update kernel-devel (without /lib/modules/xxx/build soft link creatation)
 # /usr/src/kernels/<version>/ 或 /lib/modules/<version>/build/
 if [ -d kernel-devel ]; then
