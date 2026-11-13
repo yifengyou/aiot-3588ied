@@ -61,24 +61,65 @@
 
 ## 适配进度
 
-| 仓库地址 | 分支 | 适配进度 | 备注 |
-| :--- | :--- | :--- | :--- |
-| `https://github.com/u-boot/u-boot` | `main` | ✅ 已完成 | 初步完成 |
+### 仓库结构
 
+* 适配采用多仓库体系：**每个内核对应一个独立的适配仓库**，各自构建**内核镜像、uboot 镜像**并发布到自己的 GitHub Release（内核产物含 `Image` / `config` / `System.map` / `dtb` / `kos` 等）；
+* home 仓库 `aiot-3588ied` 负责**封装 rootfs（ rootfs 产物仓库：[yifengyou/kdev](https://github.com/yifengyou/kdev) ）构建完整的 img**，发布到本仓库 Release。
 
-| 仓库地址 | 分支 | 适配进度 | 备注 |
+```
+适配仓库体系（github.com/yifengyou）
+│
+├── aiot-3588ied                ★ home 仓库：封装 rootfs → 完整 img，适配文档中心
+│
+├── 内核适配仓库（每个内核一个仓库，产出内核镜像）
+│   ├── rockchip-ophub-linux-6.18.y       ophub 6.18.y 内核（含 recovery 内核）
+│   ├── rockchip-ophub-linux-6.12.y       ophub 6.12.y 内核
+│   ├── rockchip-ophub-linux-6.6.y        ophub 6.6.y 内核
+│   ├── rockchip-ophub-linux-6.1.y        ophub 6.1.y 内核
+│   ├── rockchip-kernel                   rockchip develop-6.1 / 6.6 / 6.12 内核
+│   ├── rockchip-linux-stable             linux-stable 内核
+│   ├── rockchip-openanolis               AnolisOS devel-6.6 内核
+│   ├── rockchip-opencloudos              OpenCloudOS linux-6.6 内核
+│   └── rockchip-openeuler                openEuler OLK-6.6 内核
+│
+├── rockchip-uboot-mainline      uboot 适配仓库：uboot 镜像
+├── rockchip-khadas-android14    android14 适配仓库：uboot / kernel / 固件 / 刷机底包
+│
+└── kdev                         rootfs 产物仓库（home 仓库打包 img 的素材来源）
+```
+
+### uboot
+
+| 上游 / 分支 | 适配仓库 | 构建产物下载 | 适配进度 |
 | :--- | :--- | :--- | :--- |
-| `https://mirrors.cernet.edu.cn/linux-stable.git` | `master` | ✅ 已完成 | 初步完成, 7.3内核 |
-| `https://github.com/ophub/linux-6.18.y.git` | `ophub_6.18.y` | ✅ 已完成 | 初步完成 |
-| `https://github.com/rockchip-linux/kernel.git` | `develop-6.12` | ✅ 已完成 | 初步完成 |
-| `https://github.com/rockchip-linux/kernel.git` | `develop-6.6` | ✅ 已完成 | 初步完成 |
-| `https://github.com/rockchip-linux/kernel.git` | `develop-6.1` | ✅ 已完成 | 初步完成 |
-| `https://gitee.com/anolis/cloud-kernel` | `devel-6.6` | ✅ 已完成 | 初步完成 |
-| `https://atomgit.com/openeuler/kernel` | `OLK-6.6` | ✅ 已完成 | 初步完成 |
-| `https://gitee.com/OpenCloudOS/OpenCloudOS-Kernel` | `linux-6.6` | ✅ 已完成 | 初步完成 |
-| `https://github.com/ophub/ophub_6.1.y` | `master` | ✅ 已完成 | 初步完成 |
-| `https://github.com/ophub/ophub_6.6.y` | `master` | ✅ 已完成 | 初步完成 |
-| `https://github.com/ophub/ophub_6.12.y` | `master` | ✅ 已完成 | 初步完成 |
+| [u-boot/u-boot](https://github.com/u-boot/u-boot) `main` | [rockchip-uboot-mainline](https://github.com/yifengyou/rockchip-uboot-mainline) | [aiot-3588ied-uboot](https://github.com/yifengyou/rockchip-uboot-mainline/releases/tag/aiot-3588ied-uboot) | ✅ 已完成 |
+
+### 内核与完整镜像
+
+完整镜像（img）在本仓库封装 rootfs 后发布，每个镜像 Release 包含上百个 rootfs 变体（armbian / debian / ubuntu / openwrt / istoreos / openeuler / opencloudos / openanolis / kali / fedora / rockylinux / centos / 飞牛 fnos 等各版本）。
+
+| 上游 / 分支 | 适配仓库 | 内核产物下载 | 完整镜像(img)下载 | 适配进度 | 
+| :--- | :--- | :--- | :--- | :--- |
+| [linux-stable](https://mirrors.cernet.edu.cn/linux-stable.git) `master` | [rockchip-linux-stable](https://github.com/yifengyou/rockchip-linux-stable) | [aiot-3588ied](https://github.com/yifengyou/rockchip-linux-stable/releases/tag/aiot-3588ied) | [linux-stable](https://github.com/yifengyou/aiot-3588ied/releases/tag/linux-stable) | ✅ 已完成 | 
+| [ophub/linux-6.18.y](https://github.com/ophub/linux-6.18.y.git) `ophub_6.18.y` | [rockchip-ophub-linux-6.18.y](https://github.com/yifengyou/rockchip-ophub-linux-6.18.y) | [aiot-3588ied](https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/tag/aiot-3588ied) · [aiot-3588ied-recovery](https://github.com/yifengyou/rockchip-ophub-linux-6.18.y/releases/tag/aiot-3588ied-recovery) | [ophub_6.18.y](https://github.com/yifengyou/aiot-3588ied/releases/tag/ophub_6.18.y) | ✅ 已完成 | 
+| [rockchip-linux/kernel](https://github.com/rockchip-linux/kernel.git) `develop-6.12` | [rockchip-kernel](https://github.com/yifengyou/rockchip-kernel) | [aiot-3588ied_develop-6.12](https://github.com/yifengyou/rockchip-kernel/releases/tag/aiot-3588ied_develop-6.12) | [rockchip_develop-6.12](https://github.com/yifengyou/aiot-3588ied/releases/tag/rockchip_develop-6.12) | ✅ 已完成 |
+| [rockchip-linux/kernel](https://github.com/rockchip-linux/kernel.git) `develop-6.6` | [rockchip-kernel](https://github.com/yifengyou/rockchip-kernel) | [aiot-3588ied_develop-6.6](https://github.com/yifengyou/rockchip-kernel/releases/tag/aiot-3588ied_develop-6.6) | [rockchip_develop-6.6](https://github.com/yifengyou/aiot-3588ied/releases/tag/rockchip_develop-6.6) | ✅ 已完成 |
+| [rockchip-linux/kernel](https://github.com/rockchip-linux/kernel.git) `develop-6.1` | [rockchip-kernel](https://github.com/yifengyou/rockchip-kernel) | [aiot-3588ied_develop-6.1](https://github.com/yifengyou/rockchip-kernel/releases/tag/aiot-3588ied_develop-6.1) | [rockchip_develop-6.1](https://github.com/yifengyou/aiot-3588ied/releases/tag/rockchip_develop-6.1) | ✅ 已完成 |
+| [anolis/cloud-kernel](https://gitee.com/anolis/cloud-kernel) `devel-6.6` | [rockchip-openanolis](https://github.com/yifengyou/rockchip-openanolis) | [aiot-3588ied_devel-6.6](https://github.com/yifengyou/rockchip-openanolis/releases/tag/aiot-3588ied_devel-6.6) | [openanolis_devel-6.6](https://github.com/yifengyou/aiot-3588ied/releases/tag/openanolis_devel-6.6) | ✅ 已完成 |
+| [openeuler/kernel](https://atomgit.com/openeuler/kernel) `OLK-6.6` | [rockchip-openeuler](https://github.com/yifengyou/rockchip-openeuler) | [aiot-3588ied_OLK-6.6](https://github.com/yifengyou/rockchip-openeuler/releases/tag/aiot-3588ied_OLK-6.6) | [openeuler_olk-6.6](https://github.com/yifengyou/aiot-3588ied/releases/tag/openeuler_olk-6.6) | ✅ 已完成 |
+| [OpenCloudOS/OpenCloudOS-Kernel](https://gitee.com/OpenCloudOS/OpenCloudOS-Kernel) `linux-6.6` | [rockchip-opencloudos](https://github.com/yifengyou/rockchip-opencloudos) | [aiot-3588ied_linux-6.6](https://github.com/yifengyou/rockchip-opencloudos/releases/tag/aiot-3588ied_linux-6.6) | [opencloudos_linux-6.6](https://github.com/yifengyou/aiot-3588ied/releases/tag/opencloudos_linux-6.6) | ✅ 已完成 |
+| [ophub/ophub_6.1.y](https://github.com/ophub/ophub_6.1.y) `master` | [rockchip-ophub-linux-6.1.y](https://github.com/yifengyou/rockchip-ophub-linux-6.1.y) | [aiot-3588ied_ophub-6.1.y](https://github.com/yifengyou/rockchip-ophub-linux-6.1.y/releases/tag/aiot-3588ied_ophub-6.1.y) | [ophub_6.1.y](https://github.com/yifengyou/aiot-3588ied/releases/tag/ophub_6.1.y) | ✅ 已完成 |
+| [ophub/ophub_6.6.y](https://github.com/ophub/ophub_6.6.y) `master` | [rockchip-ophub-linux-6.6.y](https://github.com/yifengyou/rockchip-ophub-linux-6.6.y) | [aiot-3588ied_ophub-6.6.y](https://github.com/yifengyou/rockchip-ophub-linux-6.6.y/releases/tag/aiot-3588ied_ophub-6.6.y) | [ophub_6.6.y](https://github.com/yifengyou/aiot-3588ied/releases/tag/ophub_6.6.y) | ✅ 已完成 |
+| [ophub/ophub_6.12.y](https://github.com/ophub/ophub_6.12.y) `master` | [rockchip-ophub-linux-6.12.y](https://github.com/yifengyou/rockchip-ophub-linux-6.12.y) | [aiot-3588ied_ophub-6.12.y](https://github.com/yifengyou/rockchip-ophub-linux-6.12.y/releases/tag/aiot-3588ied_ophub-6.12.y) | [ophub_6.12.y](https://github.com/yifengyou/aiot-3588ied/releases/tag/ophub_6.12.y) | ✅ 已完成 |
+
+### android14
+
+| 产物 | 适配仓库 | 下载 | 适配进度 |
+| :--- | :--- | :--- | :--- |
+| uboot | [rockchip-khadas-android14](https://github.com/yifengyou/rockchip-khadas-android14) | [aiot_3588ied_uboot](https://github.com/yifengyou/rockchip-khadas-android14/releases/tag/aiot_3588ied_uboot) | ✅ 已完成 |
+| kernel | [rockchip-khadas-android14](https://github.com/yifengyou/rockchip-khadas-android14) | [aiot_3588ied_kernel](https://github.com/yifengyou/rockchip-khadas-android14/releases/tag/aiot_3588ied_kernel) | ✅ 已完成 |
+| android14 固件 | [rockchip-khadas-android14](https://github.com/yifengyou/rockchip-khadas-android14)  | [aiot_3588ied_android14](https://github.com/yifengyou/rockchip-khadas-android14/releases/tag/aiot_3588ied_android14) | ✅ 已完成 |
+| 刷机底包 |  [rockchip-khadas-android14](https://github.com/yifengyou/rockchip-khadas-android14)  | [android14_base_image](https://github.com/yifengyou/rockchip-khadas-android14/releases/tag/android14_base_image) | ✅ 已完成 |
 
 
 ---
